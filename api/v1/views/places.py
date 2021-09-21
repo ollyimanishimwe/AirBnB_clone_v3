@@ -60,7 +60,7 @@ def insert_place(city_id=None):
         return make_response(jsonify({'error': 'Missing name'}), 400)
     if "user_id" not in req_data.keys():
         return make_response(jsonify({'error': 'Missing user_id'}), 400)
-    user = storage.get(User, req_data.user_id)
+    user = storage.get(User, req_data["user_id"])
     city = storage.get(City, city_id)
     if city is None or user is None:
         abort(404)
