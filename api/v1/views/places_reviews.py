@@ -53,15 +53,13 @@ def delete_review(review_id=None):
 def insert_review(place_id=None):
     """ Creates a new review object
     """
-    req_data = {}
-    try:
-        req_data = request.get_json()
-    except Exception:
-        make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    req_data = request.get_json()
     if "text" not in req_data.keys():
-        make_response(jsonify({'error': 'Missing text'}), 400)
+        return make_response(jsonify({'error': 'Missing text'}), 400)
     if "user_id" not in req_data.keys():
-        make_response(jsonify({'error': 'Missing user_id'}), 400)
+        return make_response(jsonify({'error': 'Missing user_id'}), 400)
 
     user = storage.get(User, req_data.user_id)
     place = storage.get(Place, place_id)
@@ -80,11 +78,9 @@ def update_review(review_id=None):
     review = storage.get(Review, review_id)
     if review is None:
         abort(404)
-    req_data = {}
-    try:
-        req_data = request.get_json()
-    except Exception:
-        make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    req_data = request.get_json()
     req_data.pop("id", None)
     req_data.pop("created_at", None)
     req_data.pop("updated_at", None)

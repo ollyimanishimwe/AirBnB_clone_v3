@@ -39,11 +39,9 @@ def delete_state(state_id=None):
 def insert_state():
     """ Creates a new state object
     """
-    req_data = {}
-    try:
-        req_data = request.get_json()
-    except Exception:
+    if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    req_data = request.get_json()
     if "name" not in req_data.keys():
         return make_response(jsonify({'error': 'Missing name'}), 400)
     new_state = State(**req_data)

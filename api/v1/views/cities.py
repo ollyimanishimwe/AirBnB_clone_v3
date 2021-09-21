@@ -51,13 +51,11 @@ def delete_city(city_id=None):
 def insert_city(state_id=None):
     """ Creates a new city object
     """
-    req_data = {}
-    try:
-        req_data = request.get_json()
-    except Exception:
-        make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    req_data = request.get_json()
     if "name" not in req_data.keys():
-        make_response(jsonify({'error': 'Missing name'}), 400)
+       return make_response(jsonify({'error': 'Missing name'}), 400)
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
@@ -74,11 +72,9 @@ def update_city(city_id=None):
     city = storage.get(City, city_id)
     if city is None:
         abort(404)
-    req_data = {}
-    try:
-        req_data = request.get_json()
-    except Exception:
-        make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    req_data = request.get_json()
     req_data.pop("id", None)
     req_data.pop("created_at", None)
     req_data.pop("updated_at", None)

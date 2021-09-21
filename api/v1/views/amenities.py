@@ -40,13 +40,11 @@ def delete_amenity(amenity_id=None):
 def insert_amenity():
     """ Creates a new amenity object
     """
-    req_data = {}
-    try:
-        req_data = request.get_json()
-    except Exception:
-        make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    req_data = request.get_json()
     if "name" not in req_data.keys():
-        make_response(jsonify({'error': 'Missing name'}), 400)
+        return make_response(jsonify({'error': 'Missing name'}), 400)
     new_amenity = Amenity(**req_data)
     new_amenity.save()
     return make_response(jsonify(new_amenity.to_dict()), 201)
@@ -60,11 +58,9 @@ def update_amenity(amenity_id=None):
     amenity = storage.get(Amenity, amenity_id)
     if amenity is None:
         abort(404)
-    req_data = {}
-    try:
-        req_data = request.get_json()
-    except Exception:
-        make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    req_data = request.get_json()
     req_data.pop("id", None)
     req_data.pop("created_at", None)
     req_data.pop("updated_at", None)

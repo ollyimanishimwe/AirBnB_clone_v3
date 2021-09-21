@@ -50,15 +50,13 @@ def delete_place(place_id=None):
 def insert_place(city_id=None):
     """ Creates a new place object
     """
-    req_data = {}
-    try:
-        req_data = request.get_json()
-    except Exception:
-        make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    req_data = request.get_json()
     if "name" not in req_data.keys():
-        make_response(jsonify({'error': 'Missing name'}), 400)
+        return make_response(jsonify({'error': 'Missing name'}), 400)
     if "user_id" not in req_data.keys():
-        make_response(jsonify({'error': 'Missing user_id'}), 400)
+        return make_response(jsonify({'error': 'Missing user_id'}), 400)
     user = storage.get(User, req_data.user_id)
     city = storage.get(City, city_id)
     if city is None or user is None:
@@ -76,11 +74,9 @@ def update_place(place_id=None):
     place = storage.get(Place, place_id)
     if place is None:
         abort(404)
-    req_data = {}
-    try:
-        req_data = request.get_json()
-    except Exception:
-        make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    req_data = request.get_json()
     req_data.pop("id", None)
     req_data.pop("created_at", None)
     req_data.pop("updated_at", None)

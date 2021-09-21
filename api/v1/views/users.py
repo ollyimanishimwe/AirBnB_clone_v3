@@ -38,15 +38,13 @@ def delete_user(user_id=None):
 def insert_user():
     """ Creates a new user object
     """
-    req_data = {}
-    try:
-        req_data = request.get_json()
-    except Exception:
-        make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    req_data = request.get_json()
     if "email" not in req_data.keys():
-        make_response(jsonify({'error': 'Missing email'}), 400)
+        return make_response(jsonify({'error': 'Missing email'}), 400)
     if "password" not in req_data.keys():
-        make_response(jsonify({'error': 'Missing password'}), 400)
+        return make_response(jsonify({'error': 'Missing password'}), 400)
     new_user = User(**req_data)
     new_user.save()
     return make_response(jsonify(new_user.to_dict()), 201)
@@ -59,11 +57,9 @@ def update_user(user_id=None):
     user = storage.get(User, user_id)
     if user is None:
         abort(404)
-    req_data = {}
-    try:
-        req_data = request.get_json()
-    except Exception:
-        make_response(jsonify({'error': 'Not a JSON'}), 400)
+    if not request.get_json():
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    req_data = request.get_json()
     req_data.pop("id", None)
     req_data.pop("created_at", None)
     req_data.pop("updated_at", None)
