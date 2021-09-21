@@ -63,7 +63,7 @@ def insert_review(place_id=None):
 
     user = storage.get(User, req_data.user_id)
     place = storage.get(Place, place_id)
-    if state is None or user is None:
+    if place is None or user is None:
         abort(404)
     req_data.update({"place_id": place.id})
     new_review = Review(**req_data)
