@@ -58,11 +58,9 @@ def update_state(state_id=None):
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    req_data = {}
-    try:
-        req_data = request.get_json()
-    except Exception:
+    if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    req_data = request.get_json()
     req_data.pop("id", None)
     req_data.pop("created_at", None)
     req_data.pop("updated_at", None)
