@@ -59,14 +59,13 @@ def insert_review(place_id=None):
     if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     req_data = request.get_json()
-    if "text" not in req_data.keys():
-        return make_response(jsonify({'error': 'Missing text'}), 400)
     if "user_id" not in req_data.keys():
         return make_response(jsonify({'error': 'Missing user_id'}), 400)
-
-    user = storage.get(User, req_data.user_id)
+    user = storage.get(User, req_data['user_id'])
     if user is None:
         abort(404)
+    if "text" not in req_data.keys():
+        return make_response(jsonify({'error': 'Missing text'}), 400)
     req_data.update({"place_id": place.id})
     new_review = Review(**req_data)
     new_review.save()
