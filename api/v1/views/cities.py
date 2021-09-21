@@ -55,7 +55,7 @@ def insert_city(state_id=None):
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     req_data = request.get_json()
     if "name" not in req_data.keys():
-       return make_response(jsonify({'error': 'Missing name'}), 400)
+        return make_response(jsonify({'error': 'Missing name'}), 400)
     state = storage.get(State, state_id)
     if state is None:
         abort(404)

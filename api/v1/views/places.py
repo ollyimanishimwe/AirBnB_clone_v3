@@ -21,7 +21,8 @@ def get_place(place_id=None):
     abort(404)
 
 
-@app_views.route("/cities/<city_id>/places", methods=['GET'], strict_slashes=False)
+@app_views.route("/cities/<city_id>/places", methods=['GET'],
+                 strict_slashes=False)
 def get_places(city_id=None):
     """ Fetches place objects in a state
     """
@@ -34,7 +35,8 @@ def get_places(city_id=None):
     abort(404)
 
 
-@app_views.route("/places/<place_id>", methods=['DELETE'], strict_slashes=False)
+@app_views.route("/places/<place_id>", methods=['DELETE'],
+                 strict_slashes=False)
 def delete_place(place_id=None):
     """ Deletes a place object
     """
@@ -46,7 +48,8 @@ def delete_place(place_id=None):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route("/cities/<city_id>/places", methods=['POST'], strict_slashes=False)
+@app_views.route("/cities/<city_id>/places", methods=['POST'],
+                 strict_slashes=False)
 def insert_place(city_id=None):
     """ Creates a new place object
     """
@@ -67,7 +70,7 @@ def insert_place(city_id=None):
     return make_response(jsonify(new_place.to_dict()), 201)
 
 
-@app_views.route("/places/<place_id>",methods=['PUT'], strict_slashes=False)
+@app_views.route("/places/<place_id>", methods=['PUT'], strict_slashes=False)
 def update_place(place_id=None):
     """ Updates a place with request data
     """
