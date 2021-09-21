@@ -52,7 +52,7 @@ def insert_user():
     return make_response(jsonify(new_user.to_dict()), 201)
 
 
-@app_views.route("/users/<user_id>",methods=['PUT'], strict_slashes=False)
+@app_views.route("/users/<user_id>", methods=['PUT'], strict_slashes=False)
 def update_user(user_id=None):
     """ Updates a user object with request data
     """

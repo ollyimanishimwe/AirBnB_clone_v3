@@ -8,7 +8,8 @@ from models.amenity import Amenity
 
 
 @app_views.route("/amenities", methods=['GET'], strict_slashes=False)
-@app_views.route("/amenities/<amenity_id>", methods=['GET'], strict_slashes=False)
+@app_views.route("/amenities/<amenity_id>", methods=['GET'],
+                 strict_slashes=False)
 def get_amenities(amenity_id=None):
     """ Fetches amenity objects or one amenity object if exists
     """
@@ -22,7 +23,8 @@ def get_amenities(amenity_id=None):
     return jsonify(objs)
 
 
-@app_views.route("/amenities/<amenity_id>", methods=['DELETE'], strict_slashes=False)
+@app_views.route("/amenities/<amenity_id>", methods=['DELETE'],
+                 strict_slashes=False)
 def delete_amenity(amenity_id=None):
     """ Deletes an amenity object
     """
@@ -50,7 +52,8 @@ def insert_amenity():
     return make_response(jsonify(new_amenity.to_dict()), 201)
 
 
-@app_views.route("/amenities/<amenity_id>",methods=['PUT'], strict_slashes=False)
+@app_views.route("/amenities/<amenity_id>", methods=['PUT'],
+                 strict_slashes=False)
 def update_amenity(amenity_id=None):
     """ Updates amenity with request data
     """

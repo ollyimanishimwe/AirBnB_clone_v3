@@ -21,7 +21,8 @@ def get_review(review_id=None):
     abort(404)
 
 
-@app_views.route("/places/<place_id>/reviews", methods=['GET'], strict_slashes=False)
+@app_views.route("/places/<place_id>/reviews", methods=['GET'],
+                 strict_slashes=False)
 def get_reviews(place_id=None):
     """ Fetches review objects in a state
     """
@@ -34,7 +35,8 @@ def get_reviews(place_id=None):
     abort(404)
 
 
-@app_views.route("/reviews/<review_id>", methods=['DELETE'], strict_slashes=False)
+@app_views.route("/reviews/<review_id>", methods=['DELETE'],
+                 strict_slashes=False)
 def delete_review(review_id=None):
     """ Deletes a review object
     """
@@ -46,7 +48,8 @@ def delete_review(review_id=None):
     return make_response(jsonify({}), 200)
 
 
-@app_views.route("/places/<place_id>/reviews", methods=['POST'], strict_slashes=False)
+@app_views.route("/places/<place_id>/reviews", methods=['POST'],
+                 strict_slashes=False)
 def insert_review(place_id=None):
     """ Creates a new review object
     """
@@ -70,7 +73,7 @@ def insert_review(place_id=None):
     return make_response(jsonify(new_review.to_dict()), 201)
 
 
-@app_views.route("/reviews/<review_id>",methods=['PUT'], strict_slashes=False)
+@app_views.route("/reviews/<review_id>", methods=['PUT'], strict_slashes=False)
 def update_review(review_id=None):
     """ Updates a review with request data
     """
