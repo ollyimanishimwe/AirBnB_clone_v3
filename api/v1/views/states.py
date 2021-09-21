@@ -43,9 +43,9 @@ def insert_state():
     try:
         req_data = request.get_json()
     except Exception:
-        make_response(jsonify({'error': 'Not a JSON'}), 400)
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
     if "name" not in req_data.keys():
-        make_response(jsonify({'error': 'Missing name'}), 400)
+        return make_response(jsonify({'error': 'Missing name'}), 400)
     new_state = State(**req_data)
     new_state.save()
     return make_response(jsonify(new_state.to_dict()), 201)
@@ -62,10 +62,10 @@ def update_state(state_id=None):
     try:
         req_data = request.get_json()
     except Exception:
-        make_response(jsonify({'error': 'Not a JSON'}), 400)
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
     req_data.pop("id", None)
     req_data.pop("created_at", None)
     req_data.pop("updated_at", None)
     [setattr(state, k, v) for k, v in req_data.items()]
     state.save()
-    return jsonify(state.to_dict())
+    return make_response(jsonify(state.to_dict()), 200)
