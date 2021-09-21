@@ -53,6 +53,9 @@ def delete_review(review_id=None):
 def insert_review(place_id=None):
     """ Creates a new review object
     """
+    place = storage.get(Place, place_id)
+    if place is None:
+        abort(404)
     if not request.get_json():
         return make_response(jsonify({'error': 'Not a JSON'}), 400)
     req_data = request.get_json()
@@ -62,8 +65,7 @@ def insert_review(place_id=None):
         return make_response(jsonify({'error': 'Missing user_id'}), 400)
 
     user = storage.get(User, req_data.user_id)
-    place = storage.get(Place, place_id)
-    if place is None or user is None:
+    if user is None:
         abort(404)
     req_data.update({"place_id": place.id})
     new_review = Review(**req_data)
