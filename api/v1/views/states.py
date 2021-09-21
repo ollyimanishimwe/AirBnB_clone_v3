@@ -68,4 +68,4 @@ def update_state(state_id=None):
     req_data.pop("updated_at", None)
     [setattr(state, k, v) for k, v in req_data.items()]
     state.save()
-    return make_response(jsonify(state.to_dict()), 200)
+    return jsonify(state.to_dict())
